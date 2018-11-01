@@ -1,13 +1,13 @@
 <?php
 
-//use App\GraphQL\Mutation\NewUserMutation;
-//use App\GraphQL\Mutation\UpdateUserMutation;
-//use App\GraphQL\Query\MyProfileQuery;
-//use App\GraphQL\Query\ProductsQuery;
+use App\GraphQL\Mutation\NewUserMutation;
+use App\GraphQL\Mutation\UpdateUserMutation;
+use App\GraphQL\Query\MyProfileQuery;
+use App\GraphQL\Query\ProductsQuery;
 use App\GraphQL\Query\UsersQuery;
-//use App\GraphQL\Type\MyProfileType;
-//use App\GraphQL\Type\ProductImagesType;
-//use App\GraphQL\Type\ProductsType;
+use App\GraphQL\Type\MyProfileType;
+use App\GraphQL\Type\ProductImagesType;
+use App\GraphQL\Type\ProductsType;
 use App\GraphQL\Type\UserProfilesType;
 use App\GraphQL\Type\UsersType;
 
@@ -21,22 +21,23 @@ return [
     'schemas' => [
         'default' => [
             'query' => [
-                'users' => App\GraphQL\Query\UsersQuery::class
-//                'products' => ProductsQuery::class,
+                'users' => UsersQuery::class,
+                'products' => ProductsQuery::class,
 //                'myProfile' => MyProfileQuery::class,
             ],
             'mutation' => [
-//                'newUser' => NewUserMutation::class,
-//                'updateUser' => UpdateUserMutation::class
+                'newUser' => NewUserMutation::class,
+                'updateUser' => UpdateUserMutation::class
             ],
             'middleware' => []
         ],
     ],
     // register types
     'types' => [
-//        'product_images' => ProductImagesType::class,
-//        'products'  => ProductsType::class,
-        'user' => App\GraphQL\Type\UserType::class
+        'product_images' => ProductImagesType::class,
+        'products'  => ProductsType::class,
+        'user_profiles'  => UserProfilesType::class,
+        'users'  => UsersType::class,
 //        'myprofile'  => MyProfileType::class
     ],
     'error_formatter' => ['\Rebing\GraphQL\GraphQL', 'formatError'],

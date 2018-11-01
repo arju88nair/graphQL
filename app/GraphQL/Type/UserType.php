@@ -26,12 +26,14 @@ class UserType extends GraphQLType
                 'type' => Type::string(),
                 'description' => 'The email of user',
             ],
+
+
+            'name' => [
+                'type' => Type::string(),
+                'description' => 'The name of user',
+            ],
             // Uses the 'getIsMeAttribute' function on our custom User model
-            'isMe' => [
-                'type' => Type::boolean(),
-                'description' => 'True, if the queried user is the current user',
-                'selectable' => false, // Does not try to query this from the database
-            ]
+
         ];
     }
 

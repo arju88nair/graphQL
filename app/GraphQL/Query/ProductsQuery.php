@@ -2,24 +2,22 @@
 
 namespace App\GraphQL\Query;
 
-use App\User;
+use App\Product;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-class UsersQuery extends Query
+class ProductsQuery extends Query
 {
     protected $attributes = [
-        'name' => 'Users Query',
-        'description' => 'A query of users'
+        'name' => 'Products Query',
+        'description' => 'A query of product'
     ];
 
     public function type()
     {
-        return Type::listOf(GraphQL::type('users'));
-
-//        return GraphQL::paginate('users');
+        return GraphQL::paginate('products');
     }
 
     public function args()
@@ -27,10 +25,10 @@ class UsersQuery extends Query
         return [
             'id' => [
                 'name' => 'id',
-                'type' => Type::int()
+                'type' => Type::string()
             ],
-            'email' => [
-                'name' => 'email',
+            'title' => [
+                'name' => 'title',
                 'type' => Type::string()
             ]
         ];
@@ -43,14 +41,13 @@ class UsersQuery extends Query
                 $query->where('id',$args['id']);
             }
 
-            if (isset($args['email'])) {
-                $query->where('email',$args['email']);
+            if (isset($args['title'])) {
+                $query->where('title','like','%'.$args['email'].'%');
             }
         };
-        $user = User::with(array_keys($fields->getRelations()))
+        $with = array_keys($fields->getRelations());
+        return Product::with($with)
             ->where($where)
-            ->select($fields->getSelect())
-            ->paginate();
-        return $user;
+            ->select($fields->getSelect())->paginate();
     }
 }
